@@ -20,7 +20,6 @@
         <th>Calories</th>
     </tr>
     </thead>
-    <%--@elvariable id="meals" type="com.gmail.mxwild.mealcalories.model.MealTo"--%>
     <c:forEach var="meal" items="${meals}">
         <jsp:useBean id="meal" type="com.gmail.mxwild.mealcalories.model.MealTo"/>
         <tr class="${meal.excess ? 'excess' : 'normal'}">
