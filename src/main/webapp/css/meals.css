@@ -11,10 +11,10 @@ th, td {
     border-collapse: collapse;
 }
 
-.normal {
+.excess {
     color: red;
 }
 
-.excess {
+.normal {
     color: green;
 }
