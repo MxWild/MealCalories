@@ -38,13 +38,13 @@ public class MealServlet extends HttpServlet {
                 if ("create".equals(action)) {
                     meal = new Meal(LocalDateTime.now(), "", 1000);
                 } else {
-                    meal = repository.get(getId(req));
+                    meal = repository.get(getIntegerValue(req, "id"));
                 }
                 req.setAttribute("meal", meal);
                 req.getRequestDispatcher("mealForm.jsp").forward(req, resp);
                 break;
             case "delete":
-                Integer id = getId(req);
+                Integer id = getIntegerValue(req, "id");
                 log.info("Delete meal with id = {}", id);
                 repository.delete(id);
                 resp.sendRedirect("meals");
@@ -61,6 +61,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String id = req.getParameter("id");
 
         Meal meal;
@@ -68,19 +69,19 @@ public class MealServlet extends HttpServlet {
         if (id.isEmpty()) {
             meal = new Meal(LocalDateTime.parse(req.getParameter("dateTime")),
                     req.getParameter("description"),
-                    Integer.valueOf(req.getParameter("calories")));
+                    getIntegerValue(req, "calories"));
         } else {
             meal = repository.get(Integer.valueOf(id));
             meal.setDateTime(LocalDateTime.parse(req.getParameter("dateTime")));
             meal.setDescription(req.getParameter("description"));
-            meal.setCalories(Integer.valueOf(req.getParameter("calories")));
+            meal.setCalories(getIntegerValue(req, "calories"));
         }
         log.info(meal.isNew() ? "Create meal = {}" : "Update meal = {}", meal);
         repository.save(meal);
         resp.sendRedirect("meals");
     }
 
-    private Integer getId(HttpServletRequest request) {
-        return Integer.valueOf(request.getParameter("id"));
+    private Integer getIntegerValue(HttpServletRequest request, String parameter) {
+        return Integer.valueOf(request.getParameter(parameter));
     }
 }
