@@ -2,7 +2,7 @@ package com.gmail.mxwild.mealcalories.web;
 
 
 import com.gmail.mxwild.mealcalories.model.Meal;
-import com.gmail.mxwild.mealcalories.repository.InMemoryMealRepository;
+import com.gmail.mxwild.mealcalories.repository.inmemory.InMemoryMealRepository;
 import com.gmail.mxwild.mealcalories.repository.MealRepository;
 import com.gmail.mxwild.mealcalories.util.MealsUtil;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("get all meals");
-                req.setAttribute("meals", MealsUtil.getAll(repository.getAll(), MealsUtil.CALORIES_PER_DAY));
+                req.setAttribute("meals", MealsUtil.getAll(repository.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
 //        resp.sendRedirect("meals.jsp");
                 req.getRequestDispatcher("/meals.jsp").forward(req, resp);
                 break;

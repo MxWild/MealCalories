@@ -18,7 +18,7 @@ public class MealsUtil {
         throw new UnsupportedOperationException("This is util class can't be instance");
     }
 
-    public static final int CALORIES_PER_DAY = 2000;
+    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
     public static final List<Meal> MEALS = Arrays.asList(
             new Meal(LocalDateTime.of(2021, Month.JANUARY, 30, 10, 0), "Breakfast", 500),
             new Meal(LocalDateTime.of(2021, Month.JANUARY, 30, 13, 0), "Lunch", 1000),

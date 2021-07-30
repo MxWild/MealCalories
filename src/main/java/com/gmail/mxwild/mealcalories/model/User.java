@@ -1,9 +1,10 @@
 package com.gmail.mxwild.mealcalories.model;
 
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.Set;
 
-import static com.gmail.mxwild.mealcalories.util.MealsUtil.CALORIES_PER_DAY;
+import static com.gmail.mxwild.mealcalories.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
 public class User extends NamedEntity {
 
@@ -17,14 +18,17 @@ public class User extends NamedEntity {
 
     private Set<Role> roles;
 
-    private int caloriesPerDay = CALORIES_PER_DAY;
+    private int caloriesPerDay;
 
-    public User(Integer id, String name, String email, String password, boolean isEnabled, Date registered, Set<Role> roles, int caloriesPerDay) {
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, true, DEFAULT_CALORIES_PER_DAY, EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String name, String email, String password, boolean isEnabled, int caloriesPerDay, Set<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.isEnabled = isEnabled;
-        this.registered = registered;
         this.roles = roles;
         this.caloriesPerDay = caloriesPerDay;
     }

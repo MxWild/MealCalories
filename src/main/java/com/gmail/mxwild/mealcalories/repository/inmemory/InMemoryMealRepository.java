@@ -1,13 +1,16 @@
-package com.gmail.mxwild.mealcalories.repository;
+package com.gmail.mxwild.mealcalories.repository.inmemory;
 
 import com.gmail.mxwild.mealcalories.model.Meal;
+import com.gmail.mxwild.mealcalories.repository.MealRepository;
 import com.gmail.mxwild.mealcalories.util.MealsUtil;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Repository
 public class InMemoryMealRepository implements MealRepository {
 
     private final Map<Integer, Meal> repository = new ConcurrentHashMap<>();

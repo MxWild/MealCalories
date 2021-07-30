@@ -3,6 +3,8 @@ package com.gmail.mxwild.mealcalories.web.user;
 import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.service.UserService;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
@@ -10,11 +12,17 @@ import static com.gmail.mxwild.mealcalories.util.ValidationUtil.assureIdConsiste
 import static com.gmail.mxwild.mealcalories.util.ValidationUtil.checkNew;
 import static org.slf4j.LoggerFactory.getLogger;
 
+@Controller
 public class UserController {
 
     private static final Logger log = getLogger(UserController.class);
 
     private UserService service;
+
+    @Autowired
+    public void setService(UserService service) {
+        this.service = service;
+    }
 
     public User create(User user) {
         log.info("Create user {}", user);
