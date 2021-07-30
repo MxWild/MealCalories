@@ -9,7 +9,7 @@ public class TimeUtil {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private TimeUtil() {
-        throw new UnsupportedOperationException("Util class don't be instance");
+        throw new UnsupportedOperationException("This is util class can't be instance");
     }
 
     public static boolean isBetweenHalfOpen(LocalTime lt, LocalTime startTime, LocalTime endTime) {

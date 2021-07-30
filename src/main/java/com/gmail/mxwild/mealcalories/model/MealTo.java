@@ -2,7 +2,7 @@ package com.gmail.mxwild.mealcalories.model;
 
 import java.time.LocalDateTime;
 
-public class MealTo extends Base {
+public class MealTo extends BaseEntity {
 
     private final LocalDateTime dateTime;
     private final String description;
@@ -10,7 +10,7 @@ public class MealTo extends Base {
     private final boolean excess;
 
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
-        this.id = id;
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;

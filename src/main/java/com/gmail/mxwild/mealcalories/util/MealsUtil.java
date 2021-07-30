@@ -14,6 +14,10 @@ import java.util.stream.Collectors;
 
 public class MealsUtil {
 
+    private MealsUtil() {
+        throw new UnsupportedOperationException("This is util class can't be instance");
+    }
+
     public static final int CALORIES_PER_DAY = 2000;
     public static final List<Meal> MEALS = Arrays.asList(
             new Meal(LocalDateTime.of(2021, Month.JANUARY, 30, 10, 0), "Breakfast", 500),
@@ -41,43 +45,5 @@ public class MealsUtil {
     private static MealTo createMealTo(Meal meal, boolean excess) {
         return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
-
-/*    public static void main(String[] args) {
-
-        List<MealTo> mealsTo = filteredByCycles(MEALS, LocalTime.of(7, 0), LocalTime.of(12, 0), CALORIES_PER_DAY);
-        mealsTo.forEach(System.out::println);
-
-        List<MealTo> mealsToStreamFiltered = filteredByStream(MEALS, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
-        mealsToStreamFiltered.forEach(System.out::println);
-    }*/
-
-/*    private static List<MealTo> filteredByStream(List<Meal> meals, LocalTime startTime,
-                                                 LocalTime endTime, int caloriesPerDay) {
-
-        Map<LocalDate, Integer> caloriesByDay = meals.stream()
-                .collect(Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories)));
-
-        return meals.stream()
-                .filter(meal -> TimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime))
-                .map(meal -> createMealTo(meal, caloriesByDay.get(meal.getDate()) > caloriesPerDay))
-                .collect(Collectors.toList());
-    }*/
-
-/*    private static List<MealTo> filteredByCycles(List<Meal> meals, LocalTime startTime,
-                                                 LocalTime endTime, int caloriesPerDay) {
-
-        Map<LocalDate, Integer> caloriesByDay = new HashMap<>();
-        meals.forEach(meal -> caloriesByDay.merge(meal.getDate(), meal.getCalories(), Integer::sum));
-
-        List<MealTo> mealWithExcesses = new ArrayList<>();
-        meals.forEach(meal -> {
-            if (TimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime)) {
-                mealWithExcesses.add(createMealTo(meal, caloriesByDay.get(meal.getDate()) > caloriesPerDay
-                ));
-            }
-        });
-
-        return mealWithExcesses;
-    }*/
 
 }
