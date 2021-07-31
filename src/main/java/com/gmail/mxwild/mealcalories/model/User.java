@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
-import static com.gmail.mxwild.mealcalories.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
+import static com.gmail.mxwild.mealcalories.common.Constants.DEFAULT_CALORIES_PER_DAY;
+
 
 public class User extends NamedEntity {
 
