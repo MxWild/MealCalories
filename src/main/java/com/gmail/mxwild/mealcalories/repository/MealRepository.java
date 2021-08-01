@@ -2,16 +2,19 @@ package com.gmail.mxwild.mealcalories.repository;
 
 import com.gmail.mxwild.mealcalories.model.Meal;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface MealRepository {
 
-    Meal save(Meal meal);
+    Meal save(Meal meal, Integer userId);
 
-    boolean delete(Integer id);
+    boolean delete(Integer id, Integer userId);
 
-    Meal get(Integer id);
+    Meal get(Integer id, Integer userId);
 
-    Collection<Meal> getAll();
+    List<Meal> getAll(Integer userId);
+
+    List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
 
 }

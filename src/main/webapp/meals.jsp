@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="mailTo:mxwild@gmail.com" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -26,7 +26,7 @@
     </tr>
     </thead>
     <c:forEach var="meal" items="${meals}">
-        <jsp:useBean id="meal" type="com.gmail.mxwild.mealcalories.model.MealTo"/>
+        <jsp:useBean id="meal" type="com.gmail.mxwild.mealcalories.dto.MealDTO"/>
         <tr class="${meal.excess ? 'excess' : 'normal'}">
             <td>${fn:formatLocalDateTime(meal.dateTime)}</td>
             <td>${meal.description}</td>

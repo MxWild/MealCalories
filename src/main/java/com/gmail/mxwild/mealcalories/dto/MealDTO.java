@@ -1,16 +1,18 @@
-package com.gmail.mxwild.mealcalories.model;
+package com.gmail.mxwild.mealcalories.dto;
+
+import com.gmail.mxwild.mealcalories.model.BaseEntity;
 
 import java.time.LocalDateTime;
 
-public class MealTo extends Base {
+public class MealDTO extends BaseEntity {
 
     private final LocalDateTime dateTime;
     private final String description;
     private final int calories;
     private final boolean excess;
 
-    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
-        this.id = id;
+    public MealDTO(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
