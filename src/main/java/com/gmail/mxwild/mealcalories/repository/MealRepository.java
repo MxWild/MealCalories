@@ -2,7 +2,8 @@ package com.gmail.mxwild.mealcalories.repository;
 
 import com.gmail.mxwild.mealcalories.model.Meal;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface MealRepository {
 
@@ -12,6 +13,8 @@ public interface MealRepository {
 
     Meal get(Integer id, Integer userId);
 
-    Collection<Meal> getAll(Integer userId);
+    List<Meal> getAll(Integer userId);
+
+    List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
 
 }

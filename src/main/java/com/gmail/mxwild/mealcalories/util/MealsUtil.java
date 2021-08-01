@@ -1,15 +1,14 @@
 package com.gmail.mxwild.mealcalories.util;
 
-import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.dto.MealDTO;
+import com.gmail.mxwild.mealcalories.model.Meal;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Arrays;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
@@ -19,14 +18,20 @@ public class MealsUtil {
     }
 
     public static List<MealDTO> getAll(Collection<Meal> meals, int caloriesPerDate) {
-        return filtered(meals, caloriesPerDate);
+        return filtered(meals, caloriesPerDate, meal -> true);
     }
 
-    private static List<MealDTO> filtered(Collection<Meal> meals, int caloriesPerDate) {
+    public static List<MealDTO> getFilteredTo(List<Meal> meals, int authUserCaloriesPerDay,
+                                              LocalTime startTime, LocalTime endTime) {
+        return filtered(meals, authUserCaloriesPerDay, meal -> Util.isBetweenHalfOpen(meal.getTime(), startTime, endTime));
+    }
+
+    private static List<MealDTO> filtered(Collection<Meal> meals, int caloriesPerDate, Predicate<Meal> filter) {
         Map<LocalDate, Integer> caloriesByDay = meals.stream()
                 .collect(Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories)));
 
         return meals.stream()
+                .filter(filter)
                 .map(meal -> createMealTo(meal, caloriesByDay.get(meal.getDate()) > caloriesPerDate))
                 .collect(Collectors.toList());
     }
@@ -34,5 +39,4 @@ public class MealsUtil {
     private static MealDTO createMealTo(Meal meal, boolean excess) {
         return new MealDTO(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
-
 }

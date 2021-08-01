@@ -24,23 +24,23 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void update(User user) {
-        checkNotFoundWithId(repository.save(user), user.getId());
-    }
-
-    public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
-    }
-
     public User get(int id) {
         return checkNotFoundWithId(repository.get(id), id);
+    }
+
+    public List<User> getAll() {
+        return repository.getAll();
     }
 
     public User getByEmail(String email) {
         return checkNotFound(repository.getByEmail(email), "email = " + email);
     }
 
-    public List<User> getAll() {
-        return repository.getAll();
+    public void update(User user) {
+        checkNotFoundWithId(repository.save(user), user.getId());
+    }
+
+    public void delete(int id) {
+        checkNotFoundWithId(repository.delete(id), id);
     }
 }

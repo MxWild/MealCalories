@@ -17,10 +17,10 @@ public class UserController {
 
     private static final Logger log = getLogger(UserController.class);
 
-    private UserService service;
+    private final UserService service;
 
     @Autowired
-    public void setService(UserService service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 

@@ -1,8 +1,13 @@
 package com.gmail.mxwild.mealcalories.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+import static com.gmail.mxwild.mealcalories.common.Constants.MAX_DATE;
+import static com.gmail.mxwild.mealcalories.common.Constants.MIN_DATE;
 
 public class TimeUtil {
 
@@ -12,8 +17,12 @@ public class TimeUtil {
         throw new UnsupportedOperationException("This is util class can't be instance");
     }
 
-    public static boolean isBetweenHalfOpen(LocalTime lt, LocalTime startTime, LocalTime endTime) {
-        return lt.compareTo(startTime) >= 0 && lt.compareTo(endTime) < 0;
+    public static LocalDateTime asStartOfDayPrMin(LocalDate localDate) {
+        return localDate != null ? localDate.atStartOfDay() : MIN_DATE;
+    }
+
+    public static LocalDateTime asStartOfNextDayOrMax(LocalDate localDate) {
+        return localDate != null ? localDate.plus(1, ChronoUnit.DAYS).atStartOfDay() : MAX_DATE;
     }
 
     public static String formatLocalDateTime(LocalDateTime localDateTime) {

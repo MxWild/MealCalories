@@ -3,19 +3,20 @@ package com.gmail.mxwild.mealcalories.repository.inmemory;
 import com.gmail.mxwild.mealcalories.common.Constants;
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.repository.MealRepository;
-import com.gmail.mxwild.mealcalories.util.MealsUtil;
+import com.gmail.mxwild.mealcalories.util.Util;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.gmail.mxwild.mealcalories.common.Constants.ADMIN_ID;
@@ -67,13 +68,24 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public Collection<Meal> getAll(Integer userId) {
+    public List<Meal> getAll(Integer userId) {
         log.info("Get all meals");
+        return filteredByPredicate(userId, meal -> true);
+    }
+
+    @Override
+    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return filteredByPredicate(userId, meal -> Util.isBetweenHalfOpen(meal.getDateTime(), startDateTime, endDateTime));
+    }
+
+    private List<Meal> filteredByPredicate(int userId, Predicate<Meal> filter) {
         Map<Integer, Meal> meals = repository.get(userId);
         return CollectionUtils.isEmpty(meals) ? Collections.emptyList() :
                 meals.values()
                         .stream()
+                        .filter(filter)
                         .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                         .collect(Collectors.toList());
+
     }
 }

@@ -16,6 +16,9 @@ public class Constants {
     public static final int USER_ID = 1;
     public static final int ADMIN_ID = 2;
 
+    public static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
+    public static final LocalDateTime MAX_DATE = LocalDateTime.of(3000, 1, 1, 0, 0);
+
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     public static final List<Meal> MEALS = Arrays.asList(
