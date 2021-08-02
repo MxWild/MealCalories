@@ -7,11 +7,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.gmail.mxwild.mealcalories.util.TimeUtil.asStartOfDayPrMin;
-import static com.gmail.mxwild.mealcalories.util.TimeUtil.asStartOfNextDayOrMax;
+import static com.gmail.mxwild.mealcalories.util.DateTimeUtil.asStartOfDayPrMin;
+import static com.gmail.mxwild.mealcalories.util.DateTimeUtil.asStartOfNextDayOrMax;
 import static com.gmail.mxwild.mealcalories.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
