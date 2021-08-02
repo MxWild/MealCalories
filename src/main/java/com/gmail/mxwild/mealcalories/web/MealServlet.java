@@ -1,13 +1,11 @@
 package com.gmail.mxwild.mealcalories.web;
 
 
-import com.gmail.mxwild.mealcalories.common.Constants;
 import com.gmail.mxwild.mealcalories.model.Meal;
-import com.gmail.mxwild.mealcalories.repository.MealRepository;
-import com.gmail.mxwild.mealcalories.repository.inmemory.InMemoryMealRepository;
-import com.gmail.mxwild.mealcalories.util.MealsUtil;
-import com.gmail.mxwild.mealcalories.util.SecurityUtil;
+import com.gmail.mxwild.mealcalories.web.meal.MealRestController;
 import org.slf4j.Logger;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,11 +19,20 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class MealServlet extends HttpServlet {
 
     private static final Logger log = getLogger(MealServlet.class);
-    private MealRepository repository;
+
+    private ConfigurableApplicationContext springContext;
+    private MealRestController mealController;
 
     @Override
     public void init() {
-        repository = new InMemoryMealRepository();
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        mealController = springContext.getBean(MealRestController.class);
+    }
+
+    @Override
+    public void destroy() {
+        springContext.close();
+        super.destroy();
     }
 
     @Override
@@ -40,24 +47,21 @@ public class MealServlet extends HttpServlet {
                 if ("create".equals(action)) {
                     meal = new Meal(LocalDateTime.now(), "", 1000);
                 } else {
-                    meal = repository.get(getIntegerValue(req, "mealId"), SecurityUtil.authUserId());
+                    meal = mealController.get(getIntegerValue(req, "id"));
                 }
                 req.setAttribute("meal", meal);
                 req.getRequestDispatcher("mealForm.jsp").forward(req, resp);
                 break;
             case "delete":
-                Integer mealId = getIntegerValue(req, "mealId");
+                Integer mealId = getIntegerValue(req, "id");
                 log.info("Delete meal with mealId = {}", mealId);
-                repository.delete(mealId, SecurityUtil.authUserId());
+                mealController.delete(mealId);
                 resp.sendRedirect("meals");
                 break;
             case "all":
             default:
                 log.info("get all meals");
-                req.setAttribute("meals", MealsUtil.getAll(
-                        repository.getAll(SecurityUtil.authUserId()),
-                        Constants.DEFAULT_CALORIES_PER_DAY)
-                );
+                req.setAttribute("meals", mealController.getAll());
 //        resp.sendRedirect("meals.jsp");
                 req.getRequestDispatcher("/meals.jsp").forward(req, resp);
                 break;
@@ -67,7 +71,7 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String mealId = req.getParameter("mealId");
+        String mealId = req.getParameter("id");
 
         Meal meal;
 
@@ -75,14 +79,14 @@ public class MealServlet extends HttpServlet {
             meal = new Meal(LocalDateTime.parse(req.getParameter("dateTime")),
                     req.getParameter("description"),
                     getIntegerValue(req, "calories"));
+            mealController.create(meal);
         } else {
-            meal = repository.get(Integer.valueOf(mealId), SecurityUtil.authUserId());
+            meal = mealController.get(getIntegerValue(req, "id"));
             meal.setDateTime(LocalDateTime.parse(req.getParameter("dateTime")));
             meal.setDescription(req.getParameter("description"));
             meal.setCalories(getIntegerValue(req, "calories"));
+            mealController.update(meal, getIntegerValue(req, "id"));
         }
-        log.info(meal.isNew() ? "Create meal = {}" : "Update meal = {}", meal);
-        repository.save(meal, SecurityUtil.authUserId());
         resp.sendRedirect("meals");
     }
 

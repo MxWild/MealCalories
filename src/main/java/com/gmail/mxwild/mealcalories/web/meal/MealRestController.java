@@ -32,7 +32,7 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         int userId = SecurityUtil.authUserId();
-        log.info("Create meal = {} for user = {}", meal, userId);
+        log.info(meal.isNew() ? "Create meal = {} for user = {}" : "Update meal = {} for user = {}", meal, userId);
         checkNew(meal);
         return service.create(meal, userId);
     }
