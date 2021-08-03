@@ -1,7 +1,5 @@
 package com.gmail.mxwild.mealcalories.web.user;
 
-import com.gmail.mxwild.mealcalories.model.User;
-import com.gmail.mxwild.mealcalories.repository.inmemory.InMemoryBaseRepository;
 import com.gmail.mxwild.mealcalories.repository.inmemory.InMemoryUserRepository;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.After;
@@ -16,12 +14,14 @@ import java.util.Arrays;
 
 import static com.gmail.mxwild.mealcalories.UserTestData.NOT_FOUND;
 import static com.gmail.mxwild.mealcalories.UserTestData.USER_ID;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class UserControllerTest {
 
     private static final Logger log = getLogger(UserControllerTest.class);
+
     private static ConfigurableApplicationContext appCtx;
     private static UserController controller;
     private static InMemoryUserRepository repository;
