@@ -7,9 +7,13 @@
 <body>
     <h3>Project Calories Management</h3>
     <hr>
-    <ul>
-        <li><a href="users">Users</a></li>
-        <li><a href="meals">Meals</a> </li>
-    </ul>
+    <form method="post" action="users">
+        <b>Meals</b>
+        <select name="userId">
+            <option value="1">User</option>
+            <option value="2">Admin</option>
+        </select>
+        <button type="submit">Select</button>
+    </form>
 </body>
 </html>

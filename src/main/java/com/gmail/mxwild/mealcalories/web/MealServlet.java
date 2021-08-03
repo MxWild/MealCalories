@@ -12,8 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+import static com.gmail.mxwild.mealcalories.util.DateTimeUtil.parseLocalDate;
+import static com.gmail.mxwild.mealcalories.util.DateTimeUtil.parseLocalTime;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealServlet extends HttpServlet {
@@ -58,11 +62,18 @@ public class MealServlet extends HttpServlet {
                 mealController.delete(mealId);
                 resp.sendRedirect("meals");
                 break;
+            case "filter":
+                LocalDate startDate = parseLocalDate(req.getParameter("startDate"));
+                LocalDate endDate = parseLocalDate(req.getParameter("endDate"));
+                LocalTime startTime = parseLocalTime(req.getParameter("startTime"));
+                LocalTime endTime = parseLocalTime(req.getParameter("startTime"));
+                req.setAttribute("meals", mealController.getBetween(startDate, startTime, endDate, endTime));
+                req.getRequestDispatcher("/meals.jsp").forward(req, resp);
+                break;
             case "all":
             default:
                 log.info("get all meals");
                 req.setAttribute("meals", mealController.getAll());
-//        resp.sendRedirect("meals.jsp");
                 req.getRequestDispatcher("/meals.jsp").forward(req, resp);
                 break;
         }
