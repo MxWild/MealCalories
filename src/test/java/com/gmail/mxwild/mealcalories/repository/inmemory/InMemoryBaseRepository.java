@@ -14,8 +14,8 @@ public class InMemoryBaseRepository<T extends BaseEntity> {
 
     private static final Logger log = getLogger(InMemoryBaseRepository.class);
 
-    private final Map<Integer, T> inMemoryRepository = new ConcurrentHashMap<>();
-    private final AtomicInteger counter = new AtomicInteger(0);
+    protected final Map<Integer, T> inMemoryRepository = new ConcurrentHashMap<>();
+    protected final AtomicInteger counter = new AtomicInteger(0);
 
     public T save(T entity) {
         log.info("Save entity = {}", entity);
