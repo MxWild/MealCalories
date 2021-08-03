@@ -1,6 +1,7 @@
 package com.gmail.mxwild.mealcalories.web;
 
 
+import com.gmail.mxwild.mealcalories.util.SecurityUtil;
 import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,13 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to users");
-//        req.getRequestDispatcher("/users.jsp").forward(req, resp);
         resp.sendRedirect("users.jsp");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        SecurityUtil.setAuthUserId(userId);
+        resp.sendRedirect("meals");
     }
 }

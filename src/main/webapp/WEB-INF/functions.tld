@@ -11,7 +11,7 @@
 
     <function>
         <name>formatLocalDateTime</name>
-        <function-class>com.gmail.mxwild.mealcalories.util.TimeUtil</function-class>
+        <function-class>com.gmail.mxwild.mealcalories.util.DateTimeUtil</function-class>
         <function-signature>java.lang.String formatLocalDateTime(java.time.LocalDateTime)</function-signature>
     </function>
 
