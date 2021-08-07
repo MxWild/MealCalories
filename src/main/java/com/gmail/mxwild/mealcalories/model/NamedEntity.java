@@ -9,6 +9,9 @@ public abstract class NamedEntity extends BaseEntity {
         this.name = name;
     }
 
+    protected NamedEntity() {
+    }
+
     public String getName() {
         return name;
     }

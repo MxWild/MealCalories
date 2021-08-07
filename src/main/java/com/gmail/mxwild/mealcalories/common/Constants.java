@@ -13,8 +13,7 @@ public class Constants {
         throw new UnsupportedOperationException("This is util class can't be instance");
     }
 
-    public static final int USER_ID = 1;
-    public static final int ADMIN_ID = 2;
+    public static final int START_SEQ = 100000;
 
     public static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
     public static final LocalDateTime MAX_DATE = LocalDateTime.of(3000, 1, 1, 0, 0);

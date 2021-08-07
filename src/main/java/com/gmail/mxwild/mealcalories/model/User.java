@@ -21,17 +21,25 @@ public class User extends NamedEntity {
 
     private int caloriesPerDay;
 
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, true, DEFAULT_CALORIES_PER_DAY, EnumSet.of(role, roles));
+    public User() {
     }
 
-    public User(Integer id, String name, String email, String password, boolean isEnabled, int caloriesPerDay, Set<Role> roles) {
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+       this(id, name, email, password, true, new Date(), DEFAULT_CALORIES_PER_DAY, EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String name, String email, String password, boolean isEnabled, Date registered, int caloriesPerDay, Set<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.isEnabled = isEnabled;
-        this.roles = roles;
+        this.registered = registered;
         this.caloriesPerDay = caloriesPerDay;
+        this.roles = roles;
+    }
+
+    public User(User user) {
+        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getRegistered(), user.getCaloriesPerDay(), user.getRoles());
     }
 
     public String getEmail() {
