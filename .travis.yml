@@ -3,7 +3,7 @@ language: java
 services:
   - postgresql
 
-before_install:
+before_script:
   - psql -c 'CREATE DATABASE mealcalories;' -U postgres
 
 #before_script:
