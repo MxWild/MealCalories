@@ -5,6 +5,7 @@ services:
 
 before_script:
   - psql -c 'CREATE DATABASE mealcalories;' -U postgres
+  - psql -f db/initDB.sql -U postgres
 
 #before_script:
 #  - psql --command="CREATE USER ${DB_USER} WITH PASSWORD ${DB_PASSWORD};"
