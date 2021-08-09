@@ -3,15 +3,9 @@ language: java
 services:
   - postgresql
 
-env:
-  global:
-    - DB_NAME=mealcalories
-    - DB_USER=user
-    - DB_PASSWORD=password
-
-before_script:
-  - psql --command="CREATE USER ${DB_USER} WITH PASSWORD ${DB_PASSWORD};"
-  - psql --command="CREATE DATABASE ${DB_NAME} WITH OWNER = ${DB_USER};"
+#before_script:
+#  - psql --command="CREATE USER ${DB_USER} WITH PASSWORD ${DB_PASSWORD};"
+#  - psql --command="CREATE DATABASE ${DB_NAME} WITH OWNER = ${DB_USER};"
 
 
 #before_script:
