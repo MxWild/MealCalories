@@ -20,7 +20,7 @@
 
         <spring.version>5.3.9</spring.version>
 
-        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <slf4j.version>1.7.30</slf4j.version>
         <logback-classic.version>1.2.3</logback-classic.version>
 
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
@@ -44,8 +44,15 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api.version}</version>
+            <version>${slf4j.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

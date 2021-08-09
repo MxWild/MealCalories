@@ -5,6 +5,7 @@ import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,6 +34,10 @@ import static org.junit.Assert.assertThrows;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 
+    static {
+        SLF4JBridgeHandler.install();
+    }
+
     @Autowired
     UserService service;
 
@@ -54,15 +59,9 @@ public class UserServiceTest {
 
     @Test
     public void createWithDuplicateEmail() {
-        assertThrows(DataAccessException.class, () ->
-                service.create(
-                        new User(null,
-                                "Duplicate",
-                                "user@email.com",
-                                "newPassword",
-                                Role.USER)
-                )
-        );
+        User newUser = getNew();
+        newUser.setEmail("user@email.com");
+        assertThrows(DataAccessException.class, () ->  service.create(newUser));
     }
 
     @Test
