@@ -1,1 +1,9 @@
 language: java
+jdk: openjdk8
+
+before_script:
+  - psql -c 'create database mealcalories;' -U postgres
+
+services:
+  - postgresql
+

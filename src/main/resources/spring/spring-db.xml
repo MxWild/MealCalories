@@ -2,14 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <context:component-scan base-package="com.gmail.**.repository.jdbc"/>
 
-    <context:property-placeholder location="classpath:db/private.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/private_test.properties" system-properties-mode="OVERRIDE"/>
+
+    <jdbc:initialize-database data-source="dataSource" enabled="${db.init}">
+        <jdbc:script location="classpath:db/initDB.sql"/>
+        <jdbc:script encoding="UTF-8" location="classpath:db/populateDB.sql"/>
+    </jdbc:initialize-database>
 
     <!-- no pooling -->
     <!-- will be replace by Hikari -->
