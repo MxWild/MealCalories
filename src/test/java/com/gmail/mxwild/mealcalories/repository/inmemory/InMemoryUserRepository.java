@@ -1,5 +1,6 @@
 package com.gmail.mxwild.mealcalories.repository.inmemory;
 
+import com.gmail.mxwild.mealcalories.UserTestData;
 import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.repository.UserRepository;
 import org.slf4j.Logger;
@@ -9,12 +10,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.gmail.mxwild.mealcalories.UserTestData.ADMIN;
+import static com.gmail.mxwild.mealcalories.UserTestData.USER;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
     private static final Logger log = getLogger(InMemoryUserRepository.class);
+
+    public void init() {
+        inMemoryRepository.clear();
+        inMemoryRepository.put(UserTestData.USER_ID, USER);
+        inMemoryRepository.put(UserTestData.ADMIN_ID, ADMIN);
+        counter.getAndSet(UserTestData.ADMIN_ID + 1);
+    }
 
     @Override
     public List<User> getAll() {

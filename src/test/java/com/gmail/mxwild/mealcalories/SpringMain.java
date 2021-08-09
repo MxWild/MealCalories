@@ -16,7 +16,9 @@ import java.util.List;
 
 public class SpringMain {
     public static void main(String[] args) {
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
+        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext(
+                "spring/spring-app.xml",
+                "spring/spring-test.xml")) {
             System.out.println("Bean definition name: " + Arrays.asList(appCtx.getBeanDefinitionNames()));
             UserController userController = appCtx.getBean(UserController.class);
             userController.create(new User(null, "name", "email@mail.com", "password", Role.ADMIN));

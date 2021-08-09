@@ -17,8 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.gmail.mxwild.mealcalories.common.Constants.ADMIN_ID;
-import static com.gmail.mxwild.mealcalories.common.Constants.USER_ID;
+import static com.gmail.mxwild.mealcalories.UserTestData.ADMIN_ID;
+import static com.gmail.mxwild.mealcalories.UserTestData.USER_ID;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Repository

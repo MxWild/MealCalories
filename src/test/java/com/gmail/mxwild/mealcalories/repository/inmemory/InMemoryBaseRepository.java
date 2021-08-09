@@ -8,14 +8,15 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.gmail.mxwild.mealcalories.common.Constants.START_SEQ;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class InMemoryBaseRepository<T extends BaseEntity> {
 
     private static final Logger log = getLogger(InMemoryBaseRepository.class);
 
-    private final Map<Integer, T> inMemoryRepository = new ConcurrentHashMap<>();
-    private final AtomicInteger counter = new AtomicInteger(0);
+    protected final Map<Integer, T> inMemoryRepository = new ConcurrentHashMap<>();
+    protected final AtomicInteger counter = new AtomicInteger(START_SEQ);
 
     public T save(T entity) {
         log.info("Save entity = {}", entity);
