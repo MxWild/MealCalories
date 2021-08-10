@@ -1,6 +1,5 @@
 package com.gmail.mxwild.mealcalories.service;
 
-import com.gmail.mxwild.mealcalories.model.Role;
 import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.Test;
@@ -18,7 +17,7 @@ import java.util.List;
 
 import static com.gmail.mxwild.mealcalories.UserTestData.ADMIN;
 import static com.gmail.mxwild.mealcalories.UserTestData.EXCLUDED_FIELDS;
-import static com.gmail.mxwild.mealcalories.UserTestData.NOT_FOUND_ID;
+import static com.gmail.mxwild.mealcalories.UserTestData.NOT_FOUND_USER_ID;
 import static com.gmail.mxwild.mealcalories.UserTestData.USER;
 import static com.gmail.mxwild.mealcalories.UserTestData.USER_ID;
 import static com.gmail.mxwild.mealcalories.UserTestData.getNew;
@@ -126,6 +125,6 @@ public class UserServiceTest {
 
     @Test
     public void deleteNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND_USER_ID));
     }
 }

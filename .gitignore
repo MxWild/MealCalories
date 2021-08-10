@@ -2,3 +2,4 @@
 /meal_calories.iml
 /target/
 /log/
+/src/main/resources/db/database-prod.properties

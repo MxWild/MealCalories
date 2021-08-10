@@ -10,7 +10,7 @@
 
     <context:component-scan base-package="com.gmail.**.repository.jdbc"/>
 
-    <context:property-placeholder location="classpath:db/private_test.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/database-dev.properties" system-properties-mode="OVERRIDE"/>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${db.init}">
         <jdbc:script location="classpath:db/initDB.sql"/>
