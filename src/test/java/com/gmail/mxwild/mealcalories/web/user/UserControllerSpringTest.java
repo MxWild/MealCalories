@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.gmail.mxwild.mealcalories.UserTestData.NOT_FOUND_ID;
+import static com.gmail.mxwild.mealcalories.UserTestData.NOT_FOUND_USER_ID;
 import static com.gmail.mxwild.mealcalories.UserTestData.USER_ID;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
@@ -37,6 +37,6 @@ public class UserControllerSpringTest {
 
     @Test
     public void deleteNotFound() {
-        assertThrows(NotFoundException.class, () -> controller.delete(NOT_FOUND_ID));
+        assertThrows(NotFoundException.class, () -> controller.delete(NOT_FOUND_USER_ID));
     }
 }
