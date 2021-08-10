@@ -1,6 +1,5 @@
 package com.gmail.mxwild.mealcalories.repository.inmemory;
 
-import com.gmail.mxwild.mealcalories.common.Constants;
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.repository.MealRepository;
 import com.gmail.mxwild.mealcalories.util.Util;
@@ -17,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.gmail.mxwild.mealcalories.MealTestData.MEALS;
 import static com.gmail.mxwild.mealcalories.UserTestData.ADMIN_ID;
 import static com.gmail.mxwild.mealcalories.UserTestData.USER_ID;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -30,7 +30,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     public InMemoryMealRepository() {
         log.info("Start init example meals");
-        Constants.MEALS.forEach(meal -> save(meal, USER_ID));
+        MEALS.forEach(meal -> save(meal, USER_ID));
 
         save(new Meal(LocalDateTime.of(2021, Month.JULY, 31, 14, 0),
                         "Admin lunch", 510),

@@ -9,6 +9,7 @@ import java.util.Date;
 import static com.gmail.mxwild.mealcalories.common.Constants.START_SEQ;
 
 public class UserTestData {
+
     public static final Integer USER_ID = START_SEQ;
     public static final Integer ADMIN_ID = START_SEQ + 1;
     public static final Integer NOT_FOUND_ID = -100000;
