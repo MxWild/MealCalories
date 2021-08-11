@@ -4,6 +4,7 @@ import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class UserService {
     }
 
     public User create(User user) {
+        Assert.notNull(user, "user must not be null");
         return repository.save(user);
     }
 
@@ -33,10 +35,12 @@ public class UserService {
     }
 
     public User getByEmail(String email) {
+        Assert.notNull(email, "email must not be null");
         return checkNotFound(repository.getByEmail(email), "email = " + email);
     }
 
     public void update(User user) {
+        Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 
