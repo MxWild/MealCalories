@@ -12,7 +12,7 @@
 
     <context:component-scan base-package="com.gmail.**.repository.jdbc"/>
 
-    <context:property-placeholder location="classpath:db/database-prod.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/database-dev.properties" system-properties-mode="OVERRIDE"/>
 
     <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
         <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
