@@ -5,6 +5,7 @@ import com.gmail.mxwild.mealcalories.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +25,7 @@ public class MealService {
     }
 
     public Meal create(Meal meal, int userId) {
+        Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
     }
 
@@ -40,6 +42,7 @@ public class MealService {
     }
 
     public void update(Meal meal, int userId) {
+        Assert.notNull(meal, "meal must not be null");
         checkNotFoundWithId(repository.save(meal, userId), meal.getId());
     }
 

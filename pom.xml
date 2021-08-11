@@ -28,7 +28,7 @@
 
         <postgresql.version>42.2.23</postgresql.version>
 
-        <junit.version>4.13</junit.version>
+        <junit.version>4.13.2</junit.version>
         <assertj.version>3.20.2</assertj.version>
     </properties>
 
@@ -170,6 +170,12 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <webXml>${project.basedir}\src\main\webapp\WEB-INF\web.xml</webXml>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
             </plugin>
         </plugins>
     </build>

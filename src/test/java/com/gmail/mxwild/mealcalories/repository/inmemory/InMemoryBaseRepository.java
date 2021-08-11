@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,6 +21,7 @@ public class InMemoryBaseRepository<T extends BaseEntity> {
 
     public T save(T entity) {
         log.info("Save entity = {}", entity);
+        Objects.requireNonNull(entity, "entity must not be null");
         if (entity.isNew()) {
             entity.setId(counter.incrementAndGet());
             inMemoryRepository.put(entity.getId(), entity);
