@@ -60,7 +60,7 @@ public class UserServiceTest {
 
     @Test
     public void get() {
-        User actualUser = service.get(100000);
+        User actualUser = service.get(USER_ID);
         assertThat(actualUser)
                 .usingRecursiveComparison()
                 .ignoringFields(EXCLUDED_FIELDS)
