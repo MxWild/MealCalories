@@ -19,20 +19,22 @@
     <context:component-scan base-package="com.gmail.**.repository.jpa"/>
 
     <context:property-placeholder location="classpath:db/database-dev.properties" system-properties-mode="OVERRIDE"/>
+<!--    <context:property-placeholder location="classpath:db/database-prod.properties" system-properties-mode="OVERRIDE"/>-->
+<!--    <context:property-placeholder location="classpath:db/database-hsqldb.properties" system-properties-mode="OVERRIDE"/>-->
 
     <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
         <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
     </bean>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${db.init}">
-        <jdbc:script location="classpath:db/initDB.sql"/>
+        <jdbc:script location="${jdbc.initLocation}"/>
         <jdbc:script encoding="UTF-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
     <!-- no pooling -->
     <!-- will be replace by Hikari -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="driverClassName" value="${db.driverClassName}"/>
         <property name="url" value="${db.url}"/>
         <property name="username" value="${db.username}"/>
         <property name="password" value="${db.password}"/>
@@ -53,6 +55,18 @@
             </map>
         </property>
     </bean>
+
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.gmail.**.model"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.format_sql"></prop>
+                <prop key="use_sql_comments"></prop>
+                <prop key="hibernate.dialect"></prop>
+            </props>
+        </property>
+    </bean>-->
 
     <tx:annotation-driven/>
 
