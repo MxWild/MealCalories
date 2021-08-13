@@ -1,9 +1,23 @@
 package com.gmail.mxwild.mealcalories.model;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.SequenceGenerator;
 import java.util.Objects;
 
+import static com.gmail.mxwild.mealcalories.common.Constants.START_SEQ;
+
+@MappedSuperclass
+@Access(AccessType.FIELD)
 public abstract class BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     protected Integer id;
 
     protected BaseEntity(Integer id) {
