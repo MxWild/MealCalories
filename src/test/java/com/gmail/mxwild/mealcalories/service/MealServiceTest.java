@@ -2,8 +2,13 @@ package com.gmail.mxwild.mealcalories.service;
 
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
+import org.junit.AfterClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +20,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static com.gmail.mxwild.mealcalories.MealTestData.ADMIN_MEAL1_ID;
@@ -32,6 +38,7 @@ import static com.gmail.mxwild.mealcalories.UserTestData.USER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.slf4j.LoggerFactory.getLogger;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -41,8 +48,31 @@ import static org.junit.Assert.assertThrows;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
+    private static final Logger log = getLogger("result");
+
+    private static final StringBuilder results = new StringBuilder();
+
+    @Rule
+    public final Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        protected void finished(long nanos, Description description) {
+            String result = String.format("\n%-25s %7d", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
+            results.append(result);
+            log.info(result + " ms\n");
+        }
+    };
+
     @Autowired
     private MealService service;
+
+    @AfterClass
+    public static void printResult() {
+        log.info("\n----------------------------------" +
+                "\nTest               Duration, ms" +
+                "\n----------------------------------" +
+                results +
+                "\n----------------------------------");
+    }
 
     @Test
     public void create() {
