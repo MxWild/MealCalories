@@ -1,5 +1,7 @@
 package com.gmail.mxwild.mealcalories.model;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.GeneratedValue;
@@ -42,7 +44,7 @@ public abstract class BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
 
         BaseEntity that = (BaseEntity) o;
 
