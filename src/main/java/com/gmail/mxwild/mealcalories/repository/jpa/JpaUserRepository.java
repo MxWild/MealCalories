@@ -44,7 +44,7 @@ public class JpaUserRepository implements UserRepository {
     @Override
     public User getByEmail(String email) {
         List<User> users = entityManager
-                .createQuery("SELECT u FROM " + User.class.getSimpleName() + " u WHERE u.email = ?1")
+                .createQuery("SELECT u FROM " + User.class.getSimpleName() + " u LEFT JOIN FETCH u.roles WHERE u.email = ?1")
                 .setParameter(1, email)
                 .getResultList();
         return DataAccessUtils.singleResult(users);
@@ -53,7 +53,7 @@ public class JpaUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         return entityManager
-                .createQuery("SELECT u FROM " + User.class.getSimpleName() + " u ORDER BY u.name, u.email")
+                .createQuery("SELECT u FROM " + User.class.getSimpleName() + " u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email")
                 .getResultList();
     }
 }

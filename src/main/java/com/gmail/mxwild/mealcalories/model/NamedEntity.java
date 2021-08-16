@@ -13,7 +13,7 @@ public abstract class NamedEntity extends BaseEntity {
     @NotBlank
     @Size(min = 2, max = 180)
     @Column(name = "name", nullable = false)
-    private String name;
+    protected String name;
 
     protected NamedEntity(Integer id, String name) {
         super(id);

@@ -23,10 +23,7 @@ import java.util.Set;
 import static com.gmail.mxwild.mealcalories.common.Constants.DEFAULT_CALORIES_PER_DAY;
 
 @Entity
-@Table(name = "users",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")
-        })
+@Table(name = "users")
 public class User extends NamedEntity {
 
     @Email
@@ -51,7 +48,7 @@ public class User extends NamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {
                     @UniqueConstraint(columnNames = {"user_id", "role"},
-                            name = "user_roles_unique_idx")
+                            name = "uk_user_roles")
             })
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -64,7 +61,7 @@ public class User extends NamedEntity {
     }
 
     public User(User user) {
-        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getRegistered(), user.getCaloriesPerDay(), user.getRoles());
+        this(user.id, user.name, user.email, user.password, user.isEnabled, user.registered, user.caloriesPerDay, user.roles);
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {
