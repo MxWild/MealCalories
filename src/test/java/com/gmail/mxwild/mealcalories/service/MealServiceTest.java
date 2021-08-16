@@ -2,7 +2,6 @@ package com.gmail.mxwild.mealcalories.service;
 
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.gmail.mxwild.mealcalories.MealTestData.ADMIN_MEAL1_ID;
 import static com.gmail.mxwild.mealcalories.MealTestData.ADMIN_MEAL2;
+import static com.gmail.mxwild.mealcalories.MealTestData.EXCLUDED_FIELDS;
 import static com.gmail.mxwild.mealcalories.MealTestData.MEAL1;
 import static com.gmail.mxwild.mealcalories.MealTestData.MEAL1_ID;
 import static com.gmail.mxwild.mealcalories.MealTestData.NOT_FOUND_MEAL_ID;
@@ -39,7 +39,6 @@ import static org.junit.Assert.assertThrows;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@Ignore
 public class MealServiceTest {
 
     @Autowired
@@ -53,10 +52,12 @@ public class MealServiceTest {
         newMeal.setId(newId);
         assertThat(newMeal)
                 .usingRecursiveComparison()
+                .ignoringFields(EXCLUDED_FIELDS)
                 .isEqualTo(created);
 
         assertThat(service.get(newId, USER_ID))
                 .usingRecursiveComparison()
+                .ignoringFields(EXCLUDED_FIELDS)
                 .isEqualTo(newMeal);
     }
 
@@ -71,6 +72,7 @@ public class MealServiceTest {
         Meal actualMeal = service.get(MEAL1_ID, USER_ID);
         assertThat(actualMeal)
                 .usingRecursiveComparison()
+                .ignoringFields(EXCLUDED_FIELDS)
                 .isEqualTo(MEAL1);
     }
 
@@ -93,6 +95,7 @@ public class MealServiceTest {
 
         assertThat(actualMeals)
                 .usingRecursiveComparison()
+                .ignoringFields(EXCLUDED_FIELDS)
                 .isEqualTo(expectedMeals);
     }
 
@@ -116,6 +119,7 @@ public class MealServiceTest {
         service.update(updated, USER_ID);
         assertThat(service.get(MEAL1_ID, USER_ID))
                 .usingRecursiveComparison()
+                .ignoringFields(EXCLUDED_FIELDS)
                 .isEqualTo(updated);
     }
 
@@ -129,6 +133,7 @@ public class MealServiceTest {
         service.delete(ADMIN_MEAL1_ID, ADMIN_ID);
         assertThat(service.getAll(ADMIN_ID).get(0))
                 .usingRecursiveComparison()
+                .ignoringFields(EXCLUDED_FIELDS)
                 .isEqualTo(ADMIN_MEAL2);
         assertThrows(NotFoundException.class, () -> service.get(ADMIN_MEAL1_ID, ADMIN_ID));
     }

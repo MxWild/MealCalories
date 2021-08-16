@@ -16,6 +16,8 @@ public class MealTestData {
     public static final int ADMIN_MEAL1_ID = START_SEQ + 9;
     public static final int NOT_FOUND_MEAL_ID = -10000;
 
+    public static final String EXCLUDED_FIELDS = "user";
+
     public static final Meal MEAL1 = new Meal(MEAL1_ID, LocalDateTime.of(2021, Month.JANUARY, 30, 10, 0), "Breakfast", 500);
     public static final Meal MEAL2 = new Meal(MEAL1_ID + 1, LocalDateTime.of(2021, Month.JANUARY, 30, 13, 0), "Lunch", 1000);
     public static final Meal MEAL3 = new Meal(MEAL1_ID + 2, LocalDateTime.of(2021, Month.JANUARY, 30, 20, 0), "Dinner", 500);
