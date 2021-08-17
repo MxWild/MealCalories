@@ -78,20 +78,25 @@
     </beans>
 
     <beans profile="postgres">
-        <context:property-placeholder location="classpath:db/database-dev.properties"
-                                      system-properties-mode="OVERRIDE"/>
-        <!--<context:property-placeholder location="classpath:db/database-prod.properties"
+        <!--<context:property-placeholder location="classpath:db/database-dev.properties"
                                       system-properties-mode="OVERRIDE"/>-->
+        <context:property-placeholder location="classpath:db/database-prod.properties"
+                                      system-properties-mode="OVERRIDE"/>
 
         <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
             <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
         </bean>
 
-        <!-- no pooling -->
-        <!-- may be replace by Hikari -->
-        <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <!--<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
             <property name="driverClassName" value="org.postgresql.Driver"/>
             <property name="url" value="${db.url}"/>
+            <property name="username" value="${db.username}"/>
+            <property name="password" value="${db.password}"/>
+        </bean>-->
+
+        <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="jdbcUrl" value="${db.url}"/>
             <property name="username" value="${db.username}"/>
             <property name="password" value="${db.password}"/>
         </bean>

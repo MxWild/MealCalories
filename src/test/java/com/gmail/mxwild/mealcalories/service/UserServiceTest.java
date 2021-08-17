@@ -1,6 +1,6 @@
 package com.gmail.mxwild.mealcalories.service;
 
-import com.gmail.mxwild.mealcalories.common.Profiles;
+import com.gmail.mxwild.mealcalories.ActiveDbProfileResolver;
 import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import static org.junit.Assert.assertThrows;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class UserServiceTest {
 
     @Autowired
@@ -58,7 +58,7 @@ public class UserServiceTest {
     public void createWithDuplicateEmail() {
         User newUser = getNew();
         newUser.setEmail("user@email.com");
-        assertThrows(DataAccessException.class, () ->  service.create(newUser));
+        assertThrows(DataAccessException.class, () -> service.create(newUser));
     }
 
     @Test

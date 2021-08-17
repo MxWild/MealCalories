@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.gmail.mxwild.mealcalories.common.Constants.USER_ID;
+
 @Repository
 @Transactional(readOnly = true)
 public class JpaMealRepository implements MealRepository {
@@ -37,7 +39,7 @@ public class JpaMealRepository implements MealRepository {
         return entityManager.createQuery(
                 "DELETE FROM " + Meal.class.getSimpleName() + " m WHERE m.id=:id AND m.user.id=:userId")
                 .setParameter("id", id)
-                .setParameter("userId", userId)
+                .setParameter(USER_ID, userId)
                 .executeUpdate() != 0;
     }
 
@@ -53,7 +55,7 @@ public class JpaMealRepository implements MealRepository {
                 .createQuery("SELECT m FROM "
                         + Meal.class.getSimpleName()
                         + " m WHERE m.user.id=:userId ORDER BY m.dateTime DESC")
-                .setParameter("userId", userId)
+                .setParameter(USER_ID, userId)
                 .getResultList();
     }
 
@@ -65,7 +67,7 @@ public class JpaMealRepository implements MealRepository {
                         "AND m.dateTime >= :startDateTime " +
                         "AND m.dateTime < :endDateTime " +
                         "ORDER BY m.dateTime DESC")
-                .setParameter("userId", userId)
+                .setParameter(USER_ID, userId)
                 .setParameter("startDateTime", startDateTime)
                 .setParameter("endDateTime", endDateTime)
                 .getResultList();

@@ -1,6 +1,6 @@
 package com.gmail.mxwild.mealcalories.service;
 
-import com.gmail.mxwild.mealcalories.common.Profiles;
+import com.gmail.mxwild.mealcalories.ActiveDbProfileResolver;
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.AfterClass;
@@ -48,7 +48,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class MealServiceTest {
 
     private static final Logger log = getLogger("result");
