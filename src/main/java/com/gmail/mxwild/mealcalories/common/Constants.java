@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public class Constants {
 
+    public static final String UNSUPPORTED_CLASS = "Util class can't be instance";
+
     public static final int START_SEQ = 100000;
 
     public static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
@@ -12,7 +14,7 @@ public class Constants {
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     private Constants() {
-        throw new UnsupportedOperationException("This is util class can't be instance");
+        throw new UnsupportedOperationException(UNSUPPORTED_CLASS);
     }
 
 }
