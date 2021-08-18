@@ -13,6 +13,8 @@ public class Constants {
 
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
+    public static final String USER_ID = "userId";
+
     private Constants() {
         throw new UnsupportedOperationException(UNSUPPORTED_CLASS);
     }

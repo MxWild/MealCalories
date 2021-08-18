@@ -4,6 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -11,10 +12,12 @@
         http://www.springframework.org/schema/jdbc
         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa
+        https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!--    <context:component-scan base-package="com.gmail.**.repository.jdbc"/>-->
-    <context:component-scan base-package="com.gmail.**.repository.jpa"/>
+    <context:component-scan base-package="com.gmail.**.repository.datajpa"/>
+    <jpa:repositories base-package="com.gmail.**.repository.datajpa"/>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${db.init}">
         <jdbc:script location="${jdbc.initLocation}"/>
@@ -87,14 +90,31 @@
             <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
         </bean>
 
-        <!-- no pooling -->
-        <!-- may be replace by Hikari -->
-        <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <!--<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
             <property name="driverClassName" value="org.postgresql.Driver"/>
             <property name="url" value="${db.url}"/>
             <property name="username" value="${db.username}"/>
             <property name="password" value="${db.password}"/>
+        </bean>-->
+
+        <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="jdbcUrl" value="${db.url}"/>
+            <property name="username" value="${db.username}"/>
+            <property name="password" value="${db.password}"/>
         </bean>
+    </beans>
+
+    <beans profile="jdbc">
+<!--            <context:component-scan base-package="com.gmail.**.repository.jdbc"/>-->
+    </beans>
+
+    <beans profile="jpa">
+<!--        <context:component-scan base-package="com.gmail.**.repository.jpa"/>-->
+    </beans>
+
+    <beans profile="datajpa">
+
     </beans>
 
 </beans>
