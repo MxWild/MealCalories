@@ -1,6 +1,7 @@
 package com.gmail.mxwild.mealcalories.model;
 
 import org.hibernate.Hibernate;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -15,7 +16,7 @@ import static com.gmail.mxwild.mealcalories.common.Constants.START_SEQ;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Persistable<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
@@ -29,6 +30,7 @@ public abstract class BaseEntity {
     protected BaseEntity() {
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -37,6 +39,7 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
+    @Override
     public boolean isNew() {
         return id == null;
     }

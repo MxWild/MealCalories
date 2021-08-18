@@ -4,6 +4,7 @@ import com.gmail.mxwild.mealcalories.ActiveDbProfileResolver;
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.AfterClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Stopwatch;
@@ -16,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -78,6 +80,7 @@ public class MealServiceTest {
     }
 
     @Test
+    @Ignore
     public void create() {
         Meal created = service.create(getNew(), USER_ID);
         Integer newId = created.getId();
@@ -101,6 +104,7 @@ public class MealServiceTest {
     }
 
     @Test
+    @Ignore
     public void get() {
         Meal actualMeal = service.get(MEAL1_ID, USER_ID);
         assertThat(actualMeal)
@@ -146,7 +150,7 @@ public class MealServiceTest {
     }
 
     @Test
-
+    @Ignore
     public void update() {
         Meal updated = getUpdated();
         service.update(updated, USER_ID);
@@ -162,6 +166,7 @@ public class MealServiceTest {
     }
 
     @Test
+    @Ignore
     public void delete() {
         service.delete(ADMIN_MEAL1_ID, ADMIN_ID);
         assertThat(service.getAll(ADMIN_ID).get(0))
@@ -172,11 +177,13 @@ public class MealServiceTest {
     }
 
     @Test
+    @Ignore
     public void deleteNotFound() {
         assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND_MEAL_ID, ADMIN_ID));
     }
 
     @Test
+    @Ignore
     public void deleteNotOwn() {
         assertThrows(NotFoundException.class, () -> service.delete(ADMIN_MEAL1_ID, USER_ID));
     }
