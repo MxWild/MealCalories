@@ -4,6 +4,7 @@ import com.gmail.mxwild.mealcalories.ActiveDbProfileResolver;
 import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Stopwatch;
@@ -11,6 +12,7 @@ import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,6 +48,12 @@ public class UserServiceTest {
 
     private static final StringBuilder results = new StringBuilder();
 
+    @Autowired
+    UserService service;
+
+    @Autowired
+    CacheManager cacheManager;
+
     @Rule
     public final Stopwatch stopwatch = new Stopwatch() {
         @Override
@@ -56,8 +64,11 @@ public class UserServiceTest {
         }
     };
 
-    @Autowired
-    UserService service;
+    @Before
+    public void setup() {
+        cacheManager.getCache("users").clear();
+    }
+
 
     @AfterClass
     public static void printResult() {

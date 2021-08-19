@@ -1,10 +1,10 @@
 package com.gmail.mxwild.mealcalories.web;
 
 
+import com.gmail.mxwild.mealcalories.common.Profiles;
 import com.gmail.mxwild.mealcalories.model.Meal;
 import com.gmail.mxwild.mealcalories.web.meal.MealRestController;
 import org.slf4j.Logger;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletException;
@@ -24,12 +24,14 @@ public class MealServlet extends HttpServlet {
 
     private static final Logger log = getLogger(MealServlet.class);
 
-    private ConfigurableApplicationContext springContext;
+    private ClassPathXmlApplicationContext springContext;
     private MealRestController mealController;
 
     @Override
     public void init() {
-        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+        springContext = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
+        springContext.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.REPOSITORY_IMPLEMENTATION);
+        springContext.refresh();
         mealController = springContext.getBean(MealRestController.class);
     }
 
