@@ -2,3 +2,9 @@
 [![Build Status](https://travis-ci.com/MxWild/MealCalories.svg?branch=develop)](https://travis-ci.com/MxWild/MealCalories)
 
 # MealCalories
+
+### Create DB
+- psql -U postgres
+- CREATE DATABASE mealcalories;
+- CREATE USER "user" WITH PASSWORD 'password';
+- GRANT ALL PRIVILEGES ON DATABASE mealcalories TO "user";
