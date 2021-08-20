@@ -1,28 +1,15 @@
 package com.gmail.mxwild.mealcalories.service;
 
-import com.gmail.mxwild.mealcalories.ActiveDbProfileResolver;
 import com.gmail.mxwild.mealcalories.model.User;
 import com.gmail.mxwild.mealcalories.util.exception.NotFoundException;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.Description;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.gmail.mxwild.mealcalories.UserTestData.ADMIN;
 import static com.gmail.mxwild.mealcalories.UserTestData.EXCLUDED_FIELDS;
@@ -33,20 +20,8 @@ import static com.gmail.mxwild.mealcalories.UserTestData.getNew;
 import static com.gmail.mxwild.mealcalories.UserTestData.getUpdated;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.Assert.assertThrows;
-import static org.slf4j.LoggerFactory.getLogger;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-public class UserServiceTest {
-
-    private static final Logger log = getLogger("result");
-
-    private static final StringBuilder results = new StringBuilder();
+public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     UserService service;
@@ -54,29 +29,9 @@ public class UserServiceTest {
     @Autowired
     CacheManager cacheManager;
 
-    @Rule
-    public final Stopwatch stopwatch = new Stopwatch() {
-        @Override
-        protected void finished(long nanos, Description description) {
-            String result = String.format("\n%-25s %7d", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
-            results.append(result);
-            log.info(result + " ms\n");
-        }
-    };
-
     @Before
     public void setup() {
         cacheManager.getCache("users").clear();
-    }
-
-
-    @AfterClass
-    public static void printResult() {
-        log.info("\n----------------------------------" +
-                "\nTest               Duration, ms" +
-                "\n----------------------------------" +
-                results +
-                "\n----------------------------------");
     }
 
     @Test
